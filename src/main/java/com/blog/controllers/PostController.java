@@ -14,10 +14,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.blog.payloads.ApiResponse;
 import com.blog.payloads.PostDto;
+import com.blog.payloads.PostResponse;
 import com.blog.services.PostService;
 
 @RestController
@@ -46,9 +48,9 @@ public class PostController {
 	}
 	
 	@GetMapping("/")
-	public ResponseEntity<List<PostDto>> getAllPosts() {
-		List<PostDto> allPost = postService.getAllPost();
-		return new ResponseEntity<List<PostDto>>(allPost,HttpStatus.OK);
+	public ResponseEntity<PostResponse> getAllPosts(  @RequestParam(value = "pageNumber", defaultValue = "1", required = false) Integer pageNumber, @RequestParam(value = "pageSize", defaultValue="2", required= false) Integer pageSize ) {
+		PostResponse response = postService.getAllPost(pageNumber,pageSize);
+		return new ResponseEntity<PostResponse>(response,HttpStatus.OK);
 	}
 	
 	@GetMapping("/{postId}")
@@ -66,6 +68,6 @@ public class PostController {
 	@DeleteMapping("/{postId}")
 	public ResponseEntity<ApiResponse> deletePost(@PathVariable Integer postId) {
 		postService.deletePost(postId);
-		return new ResponseEntity<ApiResponse>(new ApiResponse("Post Deleted Successfully",true),HttpStatus.OK);
+		return new ResponseEntity<>(new ApiResponse("Post Deleted Successfully",true),HttpStatus.OK);
 	}
 }
