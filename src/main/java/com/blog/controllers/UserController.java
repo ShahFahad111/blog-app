@@ -1,7 +1,5 @@
 package com.blog.controllers;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +12,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.blog.payloads.ApiResponse;
 import com.blog.payloads.UserDto;
+import com.blog.payloads.UserResponse;
 import com.blog.services.UserService;
 
 @RestController
@@ -46,8 +46,8 @@ public class UserController {
 	}
 	
 	@GetMapping("/")
-	public ResponseEntity<List<UserDto>> getUsers() {
-		return ResponseEntity.ok(userService.getAllUsers());
+	public ResponseEntity<UserResponse> getUsers(@RequestParam(value = "pageNumber", defaultValue = "1", required = false) Integer pageNumber, @RequestParam(value = "pageSize", defaultValue = "1", required = false) Integer pageSize) {
+		return ResponseEntity.ok(userService.getAllUsers(pageNumber, pageSize));
 	}
 	
 	@GetMapping("/{userId}")

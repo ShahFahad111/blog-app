@@ -1,8 +1,7 @@
 package com.blog.services;
 
-import java.util.List;
-
 import com.blog.payloads.UserDto;
+import com.blog.payloads.UserResponse;
 
 public interface UserService {
 
@@ -12,7 +11,7 @@ public interface UserService {
 	
 	UserDto getUserById(Integer userId);
 	
-	List<UserDto> getAllUsers();
+	UserResponse getAllUsers(Integer pageNumber, Integer pageSize);
 	
 	void deleteUser(Integer userId);
 	
