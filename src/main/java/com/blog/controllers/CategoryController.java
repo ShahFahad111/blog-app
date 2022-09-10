@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.blog.constants.AppConstants;
 import com.blog.payloads.ApiResponse;
 import com.blog.payloads.CategoryDto;
 import com.blog.payloads.CategoryResponse;
@@ -53,10 +54,10 @@ public class CategoryController {
 	
 	@GetMapping("/")
 	public ResponseEntity<CategoryResponse> getAllCategory(
-			@RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
-			@RequestParam(value = "pageSize", defaultValue = "3", required = false) Integer pageSize,
-			@RequestParam(value = "sortBy", defaultValue = "categoryId", required = false) String sortBy,
-			@RequestParam(value = "sortDir", defaultValue = "asc", required = false) String sortDir
+			@RequestParam(value = "pageNumber", defaultValue = AppConstants.PAGE_NUMBER, required = false) Integer pageNumber,
+			@RequestParam(value = "pageSize", defaultValue = AppConstants.PAGE_SIZE, required = false) Integer pageSize,
+			@RequestParam(value = "sortBy", defaultValue = "category" + AppConstants.SORT_BY, required = false) String sortBy,
+			@RequestParam(value = "sortDir", defaultValue = AppConstants.SORT_DIR, required = false) String sortDir
 			){
 		CategoryResponse categoryResponse = categoryService.getAllCategory(pageNumber, pageSize, sortBy, sortDir);
 		return new ResponseEntity<CategoryResponse>(categoryResponse,HttpStatus.OK);

@@ -131,8 +131,9 @@ public class PostServiceImpl  implements PostService{
 
 	@Override
 	public List<PostDto> searchPosts(String keyword) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Post> byTitleContainingIgnoreCase = postRepo.findByTitleContainingIgnoreCase(keyword);
+		List<PostDto> list = byTitleContainingIgnoreCase.stream().map(i -> modelMapper.map(i, PostDto.class)).collect(Collectors.toList());
+		return list;
 	}
 
 }
