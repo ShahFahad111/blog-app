@@ -46,8 +46,13 @@ public class UserController {
 	}
 	
 	@GetMapping("/")
-	public ResponseEntity<UserResponse> getUsers(@RequestParam(value = "pageNumber", defaultValue = "1", required = false) Integer pageNumber, @RequestParam(value = "pageSize", defaultValue = "1", required = false) Integer pageSize) {
-		return ResponseEntity.ok(userService.getAllUsers(pageNumber, pageSize));
+	public ResponseEntity<UserResponse> getUsers(
+			@RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
+			@RequestParam(value = "pageSize", defaultValue = "3", required = false) Integer pageSize,
+			@RequestParam(value = "sortBy", defaultValue = "id", required = false) String sortBy,
+			@RequestParam(value = "sortDir", defaultValue = "asc", required = false) String sortDir
+			) {
+		return ResponseEntity.ok(userService.getAllUsers(pageNumber, pageSize,sortBy,sortDir));
 	}
 	
 	@GetMapping("/{userId}")
