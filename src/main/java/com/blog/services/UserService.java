@@ -4,6 +4,8 @@ import com.blog.payloads.UserDto;
 import com.blog.payloads.UserResponse;
 
 public interface UserService {
+	
+	UserDto registerNewUser(UserDto userDto);
 
 	UserDto createUser(UserDto userDto);
 	

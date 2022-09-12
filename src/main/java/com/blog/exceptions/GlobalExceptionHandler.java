@@ -30,6 +30,13 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<ApiResponse>(apiResponse,HttpStatus.NOT_FOUND);
 	}
 	
+	@ExceptionHandler(UserLoginException.class)
+	public ResponseEntity<ApiResponse> userLoginExceptionHandler(UserLoginException ex){
+		String message = ex.getMessage();
+		ApiResponse apiResponse = new ApiResponse(message,true);
+		return new ResponseEntity<ApiResponse>(apiResponse,HttpStatus.BAD_REQUEST);
+	}
+	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Map<String,String>> methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException ex){
 		

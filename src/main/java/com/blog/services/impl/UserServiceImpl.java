@@ -9,12 +9,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.blog.constants.AppConstants;
+import com.blog.entities.Role;
 import com.blog.entities.User;
 import com.blog.exceptions.ResourceNotFoundException;
 import com.blog.payloads.UserDto;
 import com.blog.payloads.UserResponse;
+import com.blog.repositories.RoleRepo;
 import com.blog.repositories.UserRepo;
 import com.blog.services.UserService;
 
@@ -26,6 +30,12 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private ModelMapper modelMapper;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private RoleRepo roleRepo;
 	
 	@Override
 	public UserDto createUser(UserDto userDto) {
@@ -117,5 +127,23 @@ public class UserServiceImpl implements UserService {
 		
 		return userDto;
 	}
+
+	@Override
+	public UserDto registerNewUser(UserDto userDto) {
+		
+		User user = modelMapper.map(userDto,User.class);
+		
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		
+		Role role = roleRepo.findById(AppConstants.NORMAL_USER).get(); 
+		
+		user.getRoles().add(role);
+		
+		User savedUser = userRepo.save(user);
+		
+		return modelMapper.map(savedUser, UserDto.class);
+	}
+	
+	
 	
 }
