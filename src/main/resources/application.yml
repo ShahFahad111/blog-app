@@ -1,9 +1,9 @@
 spring:
-  security:
-    user:
-      name: fahad
-      password: fahad
-      roles: ADMIN
+  #security:
+   # user:
+    #  name: fahad
+    # password: fahad
+    #  roles: ADMIN
   servlet:
     multipart:      max-file-size: 10MB      max-request-size: 10MB
   datasource:
